@@ -1,0 +1,69 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Integradora
+
+  Sample SAM Template for Integradora
+
+Globals:
+  Function:
+    Timeout: 3
+    MemorySize: 128
+
+Resources:
+  CategoriaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: hello_world/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+        - x86_64
+      Environment:
+        Variables:
+          DB_USER: admin
+          DB_PASSWORD: sispe123
+          DB_NAME: sispedb
+          DB_HOST: Colocar la correcta
+      Events:
+        GetCategoria:
+          Type: Api
+          Properties:
+            Path: /categoria
+            Method: GET
+        CreateCategoria:
+          Type: Api
+          Properties:
+            Path: /categoria
+            Method: POST
+        UpdateCategoria:
+          Type: Api
+          Properties:
+            Path: /categoria
+            Method: PUT
+        DeleteCategoria:
+          Type: Api
+          Properties:
+            Path: /categoria
+            Method: DELETE
+
+Parameters:
+  DBUser:
+    Type: String
+  DBPassword:
+    Type: String
+  DBName:
+    Type: String
+  DBHost:
+    Type: String
+
+Outputs:
+  CategoriaApi:
+    Description: "API Gateway endpoint URL for Prod stage for Categoria function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/categoria/"
+  CategoriaFunction:
+    Description: "Categoria Lambda Function ARN"
+    Value: !GetAtt CategoriaFunction.Arn
+  CategoriaFunctionIamRole:
+    Description: "Implicit IAM Role created for Categoria function"
+    Value: !GetAtt CategoriaFunctionRole.Arn
