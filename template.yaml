@@ -7,7 +7,7 @@ Description: >
 
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 40
     MemorySize: 128
 
 Resources:
@@ -21,10 +21,10 @@ Resources:
         - x86_64
       Environment:
         Variables:
-          DB_USER: admin
-          DB_PASSWORD: sispe123
-          DB_NAME: sispedb
-          DB_HOST: Colocar la correcta
+          DB_USER: !Ref DBUser
+          DB_PASSWORD: !Ref DBPassword
+          DB_NAME: !Ref DBName
+          DB_HOST: !Ref DBHost
       Events:
         GetCategoria:
           Type: Api
@@ -50,12 +50,16 @@ Resources:
 Parameters:
   DBUser:
     Type: String
+    Default: 'admin'
   DBPassword:
     Type: String
+    Default: 'sispe123'
   DBName:
     Type: String
+    Default: 'sispedb'
   DBHost:
     Type: String
+    Default: 'integradora-lambda.czc42euyq8iq.us-east-1.rds.amazonaws.com'  # Sin 'http://'
 
 Outputs:
   CategoriaApi:

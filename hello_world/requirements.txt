@@ -1,3 +1,2 @@
-requests
-pymysql
-sqlalchemy
+pymysql==1.0.2
+SQLAlchemy==1.4.36
